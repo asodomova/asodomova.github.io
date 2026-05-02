@@ -1,0 +1,213 @@
+/* Shared styles for Adéla Sodomová's site */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500&display=swap');
+
+@font-face {
+  font-family: 'PP NeueBit';
+  src: url('fonts/PPNeueBit-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: rgb(245, 245, 241);
+  --ink: rgb(0, 0, 0);
+  --blue: rgb(0, 38, 255);
+  --purple: rgb(200, 0, 255);
+  --pink: rgb(255, 0, 174);
+  --rule: rgba(0, 0, 0, 0.15);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  min-height: 100vh;
+}
+
+body {
+  padding: 60px 90px 40px;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.brand {
+  font-family: 'Crimson Text', serif;
+  font-size: 71px;
+  line-height: 1;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  user-select: none;
+}
+
+.menu {
+  display: flex;
+  gap: 32px;
+  padding-top: 22px;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.02em;
+  margin-right: auto;
+  margin-left: 220px;
+}
+
+.menu-item {
+  position: relative;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.menu-item .label {
+  display: block;
+  white-space: nowrap;
+  font-size: 25px;
+  line-height: 1;
+  padding-bottom: 6px;
+}
+
+.menu-item .submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 16px;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.menu-item:hover .submenu,
+.menu-item:focus-within .submenu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.submenu a {
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  position: relative;
+  width: max-content;
+}
+
+.submenu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.18s ease;
+}
+
+.submenu a:hover::after { transform: scaleX(1); }
+
+/* current page indicator */
+.menu-item.is-current .label { /* no marker */ }
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: auto;
+  padding-top: 80px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.footer.center { text-align: center; }
+.footer.left { text-align: left; }
+
+/* ---------- Display headings ---------- */
+.display {
+  font-family: 'Crimson Text', serif;
+  font-size: 71px;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.display-pixel {
+  font-family: 'PP NeueBit', monospace;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* ---------- Page link list (used everywhere) ---------- */
+.linklist a {
+  position: relative;
+  display: inline-block;
+}
+
+.linklist a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+
+.linklist a:hover::after { transform: scaleX(1); }
+
+/* ---------- Body article (sub-pages) ---------- */
+.article {
+  max-width: 720px;
+  margin-top: 80px;
+  font-family: 'Crimson Pro', 'Crimson Text', serif;
+  font-size: 22px;
+  line-height: 1.55;
+}
+
+.article h1 {
+  font-family: 'Crimson Text', serif;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 1.05;
+  margin: 0 0 8px;
+}
+
+.article .meta {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.55);
+  margin-bottom: 40px;
+}
+
+.article p { margin: 0 0 1.1em; text-wrap: pretty; }
+.article em { font-style: italic; }
+.article ul { padding-left: 1.2em; }
+.article ul li { margin-bottom: 0.4em; }
+
+.article a {
+  color: var(--blue);
+  border-bottom: 1px solid currentColor;
+}

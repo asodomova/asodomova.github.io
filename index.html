@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Adéla Sodomová</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="styles.css" />
+
+<style>
+  :root {
+    --first-size:    clamp(40px, 5.6vw, 82px);
+    --last-size:     clamp(52px, 7.2vw, 105px);
+    --tagline-size:  clamp(15px, 1.5vw, 24px);
+    --painting-size: clamp(220px, 32vw, 513px);
+  }
+
+  .home {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(24px, 4vw, 80px);
+    width: 100%;
+    min-height: calc(100vh - 280px);
+    padding: 0 clamp(0px, 4vw, 80px);
+  }
+
+  .home-name {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .home-name .first {
+    font-family: 'Crimson Pro', 'Crimson Text', serif;
+    font-weight: 400;
+    font-size: var(--first-size);
+    line-height: 1;
+    display: block;
+    letter-spacing: -0.01em;
+  }
+
+  .home-name .last {
+    font-family: 'PP NeueBit', monospace;
+    font-weight: 700;
+    font-size: var(--last-size);
+    line-height: 1;
+    display: block;
+    margin-top: 0.06em;
+    letter-spacing: 0.01em;
+  }
+
+  .home-name .tagline {
+    margin-top: 0.9em;
+    font-family: 'Inter', sans-serif;
+    font-size: var(--tagline-size);
+    color: var(--ink);
+  }
+
+  .home-painting-wrap {
+    flex: 0 0 auto;
+  }
+
+  .home-painting {
+    width: var(--painting-size);
+    height: var(--painting-size);
+    background: url('assets/painting.jpg') center / cover no-repeat;
+  }
+
+  .painting-credit {
+    margin-top: 10px;
+    text-align: right;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(13px, 1vw, 16px);
+    color: var(--ink);
+  }
+
+  .painting-credit a {
+    color: inherit;
+    border-bottom: 1px solid currentColor;
+    transition: color 0.2s ease;
+  }
+  .painting-credit a:hover { color: var(--blue); }
+
+  @media (max-width: 720px) {
+    :root {
+      --painting-size: 38vw;
+      --first-size: 9vw;
+      --last-size: 12vw;
+      --tagline-size: 2.4vw;
+    }
+    .home { padding: 0; gap: 16px; }
+  }
+</style>
+</head>
+<body data-page="home" data-footer="center">
+
+  <main class="home">
+    <div class="home-name">
+      <span class="first">Adéla</span>
+      <span class="last">Sodomová</span>
+      <div class="tagline">Transdisciplinary social science research</div>
+    </div>
+
+    <div class="home-painting-wrap">
+      <div class="home-painting" role="img" aria-label="Painting by Nicolás Ortega"></div>
+      <div class="painting-credit">painting by <a href="https://nicolasortega.cargo.site/" target="_blank" rel="noopener">Nicolás Ortega</a></div>
+    </div>
+  </main>
+
+  <script src="menu.js"></script>
+</body>
+</html>

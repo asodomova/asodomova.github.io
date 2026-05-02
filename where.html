@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Where to next? · Adéla Sodomová</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .where-title {
+    margin-top: 110px;
+    font-family: 'Crimson Text', serif;
+    font-size: 96px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .where-title .em {
+    font-family: 'PP NeueBit', monospace;
+    font-weight: 700;
+    font-size: 120px;
+  }
+
+  .float-stage {
+    position: relative;
+    margin-top: 70px;
+    height: 520px;
+    width: 100%;
+  }
+
+  .floater {
+    position: absolute;
+    font-family: 'Inter', sans-serif;
+    font-size: 22px;
+    color: var(--ink);
+    white-space: nowrap;
+    cursor: pointer;
+    will-change: transform;
+    transition: transform 0.4s ease;
+  }
+
+  .floater .inner {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 3px;
+  }
+
+  .floater .inner::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+
+  /* On hover, freeze drift and underline */
+  .floater:hover { animation-play-state: paused !important; }
+  .floater:hover .drift { animation-play-state: paused !important; }
+  .floater:hover .inner::after { transform: scaleX(1); }
+</style>
+</head>
+<body data-page="where">
+
+  <h1 class="where-title">Where to <span class="em">next?</span></h1>
+
+  <div class="float-stage" id="stage"></div>
+
+  <script src="menu.js"></script>
+  <script>
+    // Floating items — each one gets a random gentle drift via two CSS animations
+    // (translate + a slow rotate). Hovering pauses the animation.
+    const items = [
+      { text: 'Guerilla Open Access Manifesto', href: 'links/guerilla.html', x: 38, y: 18 },
+      { text: 'My tierlist of academic personal websites', href: 'links/tierlist.html', x: 14, y: 44 },
+      { text: 'A forever-evolving list of interesting web-based projects', href: 'links/projects.html', x: 48, y: 68 },
+      { text: 'I want to surf the web', href: 'links/surf.html', x: 70, y: 30 },
+      { text: 'Notes on slow internet', href: 'links/slow.html', x: 4,  y: 8  },
+      { text: 'Reading: Calvino, Six Memos', href: 'links/calvino.html', x: 62, y: 86 },
+    ];
+
+    const stage = document.getElementById('stage');
+    const styleSheet = document.createElement('style');
+    document.head.appendChild(styleSheet);
+
+    items.forEach((item, i) => {
+      const a = document.createElement('a');
+      a.className = 'floater';
+      a.href = item.href;
+      a.style.left = item.x + '%';
+      a.style.top = item.y + '%';
+
+      // unique drift per item
+      const dx = 6 + Math.random() * 10;   // px
+      const dy = 4 + Math.random() * 8;
+      const rot = 0.4 + Math.random() * 1.0;
+      const dur = 4 + Math.random() * 3;
+      const delay = -(Math.random() * dur);
+      const animName = `drift-${i}`;
+
+      styleSheet.sheet.insertRule(`
+        @keyframes ${animName} {
+          0%   { transform: translate(0, 0) rotate(0deg); }
+          25%  { transform: translate(${dx}px, ${-dy}px) rotate(${rot}deg); }
+          50%  { transform: translate(${dx*0.3}px, ${dy}px) rotate(${-rot*0.6}deg); }
+          75%  { transform: translate(${-dx}px, ${dy*0.3}px) rotate(${rot*0.5}deg); }
+          100% { transform: translate(0, 0) rotate(0deg); }
+        }
+      `, styleSheet.sheet.cssRules.length);
+
+      a.style.animation = `${animName} ${dur}s ease-in-out ${delay}s infinite`;
+
+      const inner = document.createElement('span');
+      inner.className = 'inner';
+      inner.textContent = item.text;
+      a.appendChild(inner);
+      stage.appendChild(a);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>About — Bullet form · Adéla Sodomová</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .about-title {
+    margin-top: 70px;
+    font-family: 'Crimson Text', serif;
+    font-size: 71px;
+    line-height: 1;
+  }
+  .about-title .em {
+    font-family: 'PP NeueBit', monospace;
+    font-weight: 700;
+    font-size: 90px;
+  }
+
+  .form-toggle {
+    margin-top: 14px;
+    display: flex;
+    gap: 28px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .form-toggle a { position: relative; }
+  .form-toggle a.active { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+  .form-toggle a:not(.active):hover { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+
+  .pdf-frame {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 1100px;
+    aspect-ratio: 1 / 1.414; /* A4 */
+    border: 1px solid var(--rule);
+    background: #fff;
+  }
+
+  .pdf-fallback {
+    margin-top: 14px;
+    font-size: 14px;
+    color: rgba(0,0,0,0.6);
+  }
+  .pdf-fallback a {
+    color: var(--blue);
+    border-bottom: 1px solid currentColor;
+  }
+</style>
+</head>
+<body data-page="about-bullet">
+
+  <h1 class="about-title">About <span class="em">me</span></h1>
+
+  <div class="form-toggle">
+    <a href="about-prose.html">Prose form</a>
+    <a href="about-bullet.html" class="active">Bullet form</a>
+  </div>
+
+  <iframe
+    class="pdf-frame"
+    src="assets/sodomova_CV_march.pdf#view=FitH"
+    title="Adéla Sodomová — CV"
+    loading="lazy"></iframe>
+
+  <p class="pdf-fallback">
+    Can't see the CV? <a href="assets/sodomova_CV_march.pdf" target="_blank" rel="noopener">Open the PDF in a new tab →</a>
+  </p>
+
+  <script src="menu.js"></script>
+</body>
+</html>

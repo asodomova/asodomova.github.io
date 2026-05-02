@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>About — Prose form · Adéla Sodomová</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .about-title {
+    margin-top: 70px;
+    font-family: 'Crimson Text', serif;
+    font-size: 71px;
+    line-height: 1;
+  }
+  .about-title .em {
+    font-family: 'PP NeueBit', monospace;
+    font-weight: 700;
+    font-size: 90px;
+  }
+
+  .form-toggle {
+    margin-top: 14px;
+    display: flex;
+    gap: 28px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .form-toggle a { position: relative; }
+  .form-toggle a.active { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+  .form-toggle a:not(.active):hover { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
+
+  .article {
+    margin-top: 56px;
+  }
+  .dropcap::first-letter {
+    font-family: 'Crimson Text', serif;
+    font-size: 4em;
+    float: left;
+    line-height: 0.85;
+    padding: 6px 8px 0 0;
+  }
+</style>
+</head>
+<body data-page="about-prose">
+
+  <h1 class="about-title">About <span class="em">me</span></h1>
+
+  <div class="form-toggle">
+    <a href="about-prose.html" class="active">Prose form</a>
+    <a href="about-bullet.html">Bullet form</a>
+  </div>
+
+  <article class="article">
+    <p class="dropcap">I am a researcher, writer and occasional designer based between Prague and Edinburgh, working at the seams where social science, philosophy and the visual coexist. My current preoccupations sit at the intersection of misinformation, collective memory, and the strange psychic textures of online life — a soft, recursive territory that doesn't fit neatly inside one discipline.</p>
+
+    <p>I trained originally in psychology and visual communication, two fields that, for whatever reason, taught me to ask the same question twice: <em>what is a person doing when they pay attention to something, and why this and not that?</em> The methods differ, the question doesn't. Most of my work tries to take that question seriously without making it precious.</p>
+
+    <p>Outside of research I write essays — sometimes for myself, sometimes for Czech magazines like <em>Advojka</em> — and keep a slow practice of illustration and hand-drawn animation. I find that switching mediums sharpens the writing; the eye and the sentence keep each other honest.</p>
+
+    <p>If you'd like to talk about a project, an essay, or a half-formed idea you're trying to finish, I'm easy to reach. I'm slow but reliable.</p>
+  </article>
+
+  <script src="menu.js"></script>
+</body>
+</html>
