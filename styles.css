@@ -81,7 +81,7 @@ a {
 .menu-item .label {
   display: block;
   white-space: nowrap;
-  font-size: 25px;
+  font-size: 18px;
   line-height: 1;
   padding-bottom: 6px;
 }
@@ -91,7 +91,7 @@ a {
   flex-direction: column;
   gap: 6px;
   margin-top: 6px;
-  font-size: 16px;
+  font-size: 11px;
   opacity: 0;
   transform: translateY(-4px);
   pointer-events: none;
