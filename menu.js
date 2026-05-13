@@ -4,7 +4,7 @@
 
 (function () {
   const page = document.body.dataset.page || 'home';
-  const footerMode = document.body.dataset.footer || (page === 'home' ? 'center' : 'left');
+  const footerMode = document.body.dataset.footer || 'right';
 
   const isAbout = page.startsWith('about');
   const isWork = page === 'work' || page === 'work-essay';
