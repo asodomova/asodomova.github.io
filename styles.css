@@ -20,6 +20,9 @@
 
 * { box-sizing: border-box; }
 
+/* ---------- Animated fairy cursor ---------- */
+*, *::before, *::after { cursor: none !important; }
+
 html, body {
   margin: 0;
   padding: 0;

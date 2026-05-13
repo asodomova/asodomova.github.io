@@ -41,4 +41,43 @@
   footer.className = `footer ${footerMode}`;
   footer.textContent = 'Thank you for paying me a visit!';
   document.body.appendChild(footer);
+
+  // ---- Animated fairy cursor ----
+  const FRAMES = 5;
+  const BASE   = 'cursors/fairy_';
+  const FPS    = 12; // frames per second
+
+  // Preload all frames
+  const imgs = Array.from({ length: FRAMES }, (_, i) => {
+    const img = new Image();
+    img.src = BASE + i + '.png';
+    return img;
+  });
+
+  const el = document.createElement('img');
+  el.style.cssText = [
+    'position:fixed',
+    'pointer-events:none',
+    'z-index:99999',
+    'width:32px',
+    'height:32px',
+    'transform:translate(-4px,-4px)', // hotspot offset
+    'image-rendering:pixelated',
+  ].join(';');
+  el.src = imgs[0].src;
+  document.body.appendChild(el);
+
+  let frame = 0;
+  let x = -100, y = -100;
+
+  document.addEventListener('mousemove', e => {
+    x = e.clientX; y = e.clientY;
+    el.style.left = x + 'px';
+    el.style.top  = y + 'px';
+  });
+
+  setInterval(() => {
+    frame = (frame + 1) % FRAMES;
+    el.src = imgs[frame].src;
+  }, 1000 / FPS);
 })();
