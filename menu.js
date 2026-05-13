@@ -59,8 +59,8 @@
     'position:fixed',
     'pointer-events:none',
     'z-index:99999',
-    'width:32px',
-    'height:32px',
+    'width:42px',
+    'height:42px',
     'transform:translate(-4px,-4px)', // hotspot offset
     'image-rendering:pixelated',
   ].join(';');
