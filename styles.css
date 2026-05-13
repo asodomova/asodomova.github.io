@@ -33,6 +33,7 @@ html, body {
 
 body {
   padding: 60px 90px 40px;
+  min-width: 960px;
   position: relative;
   overflow-x: hidden;
   display: flex;

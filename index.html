@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>Adéla Sodomová</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=960" />
 <link rel="stylesheet" href="styles.css" />
 
 <style>
@@ -19,10 +19,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    gap: clamp(24px, 4vw, 80px);
+    gap: 60px;
     width: 100%;
     min-height: calc(100vh - 280px);
-    padding: 0 clamp(0px, 4vw, 80px);
+    padding: 0;
   }
 
   .home-name {
@@ -81,15 +81,7 @@
   }
   .painting-credit a:hover { color: var(--blue); }
 
-  @media (max-width: 720px) {
-    :root {
-      --painting-size: 38vw;
-      --first-size: 9vw;
-      --last-size: 12vw;
-      --tagline-size: 2.4vw;
-    }
-    .home { padding: 0; gap: 16px; }
-  }
+  /* mobile layout reserved for future redesign */
 </style>
 </head>
 <body data-page="home" data-footer="center">
