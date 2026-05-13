@@ -39,15 +39,9 @@
     display: grid;
     grid-template-columns: 160px 1fr;
     column-gap: 36px;
-    row-gap: 0;
+    row-gap: 14px;
     font-size: 18px;
     line-height: 1.4;
-    border-top: 1px solid var(--rule);
-  }
-
-  .row > div {
-    border-bottom: 1px solid var(--rule);
-    padding: 10px 0;
   }
 
   .row .year {
@@ -56,27 +50,40 @@
     white-space: nowrap;
   }
 
-  .row a {
+  /* Full-width coloured line on hover — spans year + title columns */
+  .row > div:not(.year) {
     position: relative;
-    display: inline;
+    padding-bottom: 6px;
+  }
+
+  .row > div:not(.year)::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: calc(-160px - 36px); /* reach back over the year column + gap */
+    right: 0;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+
+  .section.essays   .row > div:not(.year)::after { background: var(--blue); }
+  .section.academic .row > div:not(.year)::after { background: var(--purple); }
+  .section.design   .row > div:not(.year)::after { background: var(--pink); }
+
+  .row > div:not(.year):has(a:hover)::after { transform: scaleX(1); }
+
+  .row a {
     color: var(--ink);
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0 1px;
-    background-repeat: no-repeat;
-    background-position: 0 100%;
-    transition: background-size 0.25s ease;
-    padding-bottom: 1px;
+    transition: color 0.25s ease;
   }
 
-  .section.essays   .row a { color: var(--ink); --hl: var(--blue); }
-  .section.academic .row a { color: var(--ink); --hl: var(--purple); }
-  .section.design   .row a { color: var(--ink); --hl: var(--pink); }
+  .section.essays   .row a { --hl: var(--blue); }
+  .section.academic .row a { --hl: var(--purple); }
+  .section.design   .row a { --hl: var(--pink); }
 
-  .row a:hover {
-    background-image: linear-gradient(var(--hl), var(--hl));
-    background-size: 100% 1px;
-    color: var(--hl);
-  }
+  .row a:hover { color: var(--hl); }
 
   .row em { font-style: italic; }
 </style>
