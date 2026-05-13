@@ -7,36 +7,99 @@
 <link rel="stylesheet" href="../styles.css" />
 <base href="../" />
 <style>
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-    margin: 32px 0;
+  .gallery {
+    margin-top: 48px;
+    columns: 3;
+    column-gap: 28px;
   }
-  .ph {
-    aspect-ratio: 1/1;
-    background:
-      repeating-linear-gradient(45deg,
-        rgba(0,0,0,0.04) 0 12px,
-        rgba(0,0,0,0.08) 12px 13px);
-    border: 1px solid var(--rule);
-    display: flex; align-items: center; justify-content: center;
-    font-family: ui-monospace, monospace; font-size: 11px; color: rgba(0,0,0,0.55);
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 28px;
+  }
+
+  /* Stagger columns for a scattered feel */
+  .gallery-item:nth-child(3n+2) { margin-top: 48px; }
+  .gallery-item:nth-child(3n+3) { margin-top: 96px; }
+
+  .gallery-item img {
+    display: block;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .gallery-item .caption {
+    margin-top: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    color: rgba(0,0,0,0.55);
+    text-transform: uppercase;
   }
 </style>
 </head>
 <body data-page="work-essay">
   <article class="article">
-    <h1>Illustration & handdrawn animation</h1>
-    <div class="meta">Ongoing practice</div>
-    <p>An ongoing notebook of drawings and short animations. I tend to work in ink, sometimes graphite, occasionally on a tablet when I'm travelling. Subjects come and go. Lately: rooms with strange weather, the backs of people's heads, very specific kinds of light.</p>
-    <div class="grid">
-      <div class="ph">[ ink_2023_03 ]</div>
-      <div class="ph">[ ink_2024_11 ]</div>
-      <div class="ph">[ anim_loop_07 ]</div>
-      <div class="ph">[ tablet_2025_02 ]</div>
-    </div>
+    <h1>Illustration &amp; handdrawn animation</h1>
+    <p>An ongoing notebook of drawings and short animations.</p>
   </article>
+
+  <div class="gallery">
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-01.jpg" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-02.jpg" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-03.png" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-04.png" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-05.png" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-06.gif" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-07.gif" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-08.png" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-09.gif" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+    <div class="gallery-item">
+      <img src="assets/illustration/il-10.png" alt="" />
+      <div class="caption">Title / annotation coming soon</div>
+    </div>
+
+  </div>
+
   <script src="menu.js"></script>
 </body>
 </html>
