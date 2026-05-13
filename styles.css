@@ -146,6 +146,7 @@ a {
 
 .footer.center { text-align: center; }
 .footer.left { text-align: left; }
+.footer.right { text-align: right; }
 
 /* ---------- Display headings ---------- */
 .display {
