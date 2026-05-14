@@ -7,19 +7,21 @@
 <link rel="stylesheet" href="styles.css" />
 <style>
 
-  /* ---- Animation stage (sits in normal flow, below topbar) ---- */
-  #anim-stage {
-    position: relative;
-    width: 100%;
-    height: 480px;
+  /* ---- Animation overlay (fixed, covers everything) ---- */
+  #anim-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: var(--bg);
     pointer-events: none;
+    transition: opacity 0.5s ease;
   }
-  #anim-stage.choosing { pointer-events: auto; }
+  #anim-overlay.active  { pointer-events: auto; }
+  #anim-overlay.fading  { opacity: 0; pointer-events: none; }
 
   #anim-svg {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     overflow: visible;
@@ -45,12 +47,8 @@
     opacity: 0;
     transform: translateX(-50%);
     transition: color 0.12s ease, background-color 0.12s ease, opacity 0.35s ease;
-    pointer-events: none;
   }
-  .choice-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .choice-btn.visible { opacity: 1; }
   .choice-btn:hover {
     color: var(--bg);
     background-color: var(--ink);
@@ -130,8 +128,8 @@
 </head>
 <body data-page="about" data-footer="right">
 
-  <!-- Animation stage (topbar is injected above this by menu.js) -->
-  <div id="anim-stage" class="choosing">
+  <!-- Animation overlay -->
+  <div id="anim-overlay" class="active">
     <svg id="anim-svg"></svg>
     <button class="choice-btn" id="btn-prose">PROSE FORM</button>
     <button class="choice-btn" id="btn-bullet">BULLET FORM</button>
@@ -171,14 +169,7 @@
   <script>
   (function () {
 
-    // Wait for menu.js to inject the topbar, then measure brand position
-    // Use requestAnimationFrame to ensure layout is complete
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        init();
-      });
-    });
-
+    // ── helpers ──────────────────────────────────────────────────────────
     function svgPath(d) {
       const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       p.setAttribute('d', d);
@@ -199,112 +190,92 @@
       }, delay);
     }
 
-    function init() {
-      var svg      = document.getElementById('anim-svg');
-      var stage    = document.getElementById('anim-stage');
-      var btnProse  = document.getElementById('btn-prose');
-      var btnBullet = document.getElementById('btn-bullet');
-      var content   = document.getElementById('content-area');
+    // ── main ─────────────────────────────────────────────────────────────
+    var svg      = document.getElementById('anim-svg');
+    var overlay  = document.getElementById('anim-overlay');
+    var btnProse  = document.getElementById('btn-prose');
+    var btnBullet = document.getElementById('btn-bullet');
+    var content   = document.getElementById('content-area');
 
-      var brand = document.querySelector('.brand-name');
-      if (!brand) return;
+    var brand = document.querySelector('.brand-name');
+    if (!brand) return; // safety
 
-      // Coordinates relative to viewport
-      var br = brand.getBoundingClientRect();
-      var sr = stage.getBoundingClientRect();
+    var r       = brand.getBoundingClientRect();
+    var sx      = r.left + r.width / 2;   // start x (brand centre)
+    var sy      = r.bottom + 12;           // start y (just below brand)
+    var dropV   = 200;                     // vertical drop before fork
+    var spread  = 210;                     // horizontal spread of branches
+    var dropB   = 130;                     // vertical drop of branches
 
-      // Start point: bottom-center of brand name, expressed in stage-local coords
-      var sx = (br.left + br.width / 2) - sr.left;
-      var sy = br.bottom - sr.top;
+    var mx = sx,          my = sy + dropV;           // fork point
+    var px = mx - spread, py = my + dropB;           // prose endpoint
+    var bx = mx + spread, by = my + dropB;           // bullet endpoint
 
-      // Fork point (where the two curves diverge)
-      var forkY = sy + 160;
+    // create paths
+    var vLine   = svgPath('M ' + sx + ' ' + sy  + ' L ' + mx + ' ' + my);
+    var lBranch = svgPath('M ' + mx + ' ' + my  + ' L ' + px + ' ' + py);
+    var rBranch = svgPath('M ' + mx + ' ' + my  + ' L ' + bx + ' ' + by);
+    svg.appendChild(vLine);
+    svg.appendChild(lBranch);
+    svg.appendChild(rBranch);
 
-      // End points for the two branches
-      var spread = 200;
-      var px = sx - spread;   // prose  (left)
-      var py = forkY + 140;
-      var bx = sx + spread;   // bullet (right)
-      var by = forkY + 140;
+    // position buttons below branch endpoints
+    btnProse.style.left  = px + 'px';
+    btnProse.style.top   = (py + 14) + 'px';
+    btnBullet.style.left = bx + 'px';
+    btnBullet.style.top  = (by + 14) + 'px';
 
-      // ── Organic cubic-bezier curves ──────────────────────────────────────
-      // Left curve: starts going slightly left, arcs down and left
-      var lPath = svgPath(
-        'M ' + sx + ' ' + sy +
-        ' C ' + (sx - 20)  + ' ' + (sy + 80)   +   // cp1: slight left drift
-        ', '  + (px + 80)  + ' ' + (forkY + 40) +  // cp2: pull toward left endpoint
-        ', '  + px         + ' ' + py
-      );
+    // animate
+    var DELAY_START  = 250;
+    var DUR_VERT     = 650;
+    var DUR_BRANCH   = 420;
+    var DELAY_BRANCH = DELAY_START + DUR_VERT - 60;
+    var DELAY_BTNS   = DELAY_BRANCH + DUR_BRANCH;
 
-      // Right curve: starts going slightly right, arcs down and right
-      var rPath = svgPath(
-        'M ' + sx + ' ' + sy +
-        ' C ' + (sx + 20)  + ' ' + (sy + 80)   +   // cp1: slight right drift
-        ', '  + (bx - 80)  + ' ' + (forkY + 40) +  // cp2: pull toward right endpoint
-        ', '  + bx         + ' ' + by
-      );
+    animatePath(vLine,   DELAY_START,  DUR_VERT,   null);
+    animatePath(lBranch, DELAY_BRANCH, DUR_BRANCH, null);
+    animatePath(rBranch, DELAY_BRANCH, DUR_BRANCH, null);
 
-      svg.appendChild(lPath);
-      svg.appendChild(rPath);
+    setTimeout(function () {
+      btnProse.classList.add('visible');
+      btnBullet.classList.add('visible');
+    }, DELAY_BTNS);
 
-      // Position buttons below branch endpoints (in stage-local coords)
-      btnProse.style.left  = px + 'px';
-      btnProse.style.top   = (py + 14) + 'px';
-      btnBullet.style.left = bx + 'px';
-      btnBullet.style.top  = (by + 14) + 'px';
+    // ── choice ───────────────────────────────────────────────────────────
+    function choose(section) {
+      overlay.classList.add('fading');
+      setTimeout(function () { overlay.style.display = 'none'; }, 500);
 
-      // ── Animate ──────────────────────────────────────────────────────────
-      var DELAY_START = 350;
-      var DUR_LINE    = 900;
-      var DELAY_BTNS  = DELAY_START + DUR_LINE;
-
-      animatePath(lPath, DELAY_START, DUR_LINE, null);
-      animatePath(rPath, DELAY_START, DUR_LINE, null);
-
-      setTimeout(function () {
-        btnProse.classList.add('visible');
-        btnBullet.classList.add('visible');
-      }, DELAY_BTNS);
-
-      // ── Choice ───────────────────────────────────────────────────────────
-      function choose(section) {
-        // Fade out the animation stage
-        stage.style.transition = 'opacity 0.5s ease';
-        stage.style.opacity    = '0';
-        setTimeout(function () { stage.style.display = 'none'; }, 500);
-
-        // Reveal content
-        content.style.display = 'block';
+      content.style.display = 'block';
+      requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            content.classList.add('visible');
-          });
+          content.classList.add('visible');
         });
+      });
 
-        setSection(section);
-      }
-
-      function setSection(name) {
-        var prose   = document.getElementById('section-prose');
-        var bullet  = document.getElementById('section-bullet');
-        var tProse  = document.getElementById('toggle-prose');
-        var tBullet = document.getElementById('toggle-bullet');
-
-        if (name === 'prose') {
-          prose.classList.add('active');    bullet.classList.remove('active');
-          tProse.classList.add('active');   tBullet.classList.remove('active');
-        } else {
-          bullet.classList.add('active');   prose.classList.remove('active');
-          tBullet.classList.add('active');  tProse.classList.remove('active');
-        }
-      }
-
-      btnProse.addEventListener('click',  function () { choose('prose');  });
-      btnBullet.addEventListener('click', function () { choose('bullet'); });
-
-      document.getElementById('toggle-prose').addEventListener('click',  function () { setSection('prose');  });
-      document.getElementById('toggle-bullet').addEventListener('click', function () { setSection('bullet'); });
+      setSection(section);
     }
+
+    function setSection(name) {
+      var prose  = document.getElementById('section-prose');
+      var bullet = document.getElementById('section-bullet');
+      var tProse  = document.getElementById('toggle-prose');
+      var tBullet = document.getElementById('toggle-bullet');
+
+      if (name === 'prose') {
+        prose.classList.add('active');    bullet.classList.remove('active');
+        tProse.classList.add('active');   tBullet.classList.remove('active');
+      } else {
+        bullet.classList.add('active');  prose.classList.remove('active');
+        tBullet.classList.add('active'); tProse.classList.remove('active');
+      }
+    }
+
+    btnProse.addEventListener('click',  function () { choose('prose');  });
+    btnBullet.addEventListener('click', function () { choose('bullet'); });
+
+    document.getElementById('toggle-prose').addEventListener('click',  function () { setSection('prose');  });
+    document.getElementById('toggle-bullet').addEventListener('click', function () { setSection('bullet'); });
 
   })();
   </script>
