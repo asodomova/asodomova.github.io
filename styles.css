@@ -69,15 +69,47 @@ a {
   user-select: none;
 }
 
+/* ---------- Brand name (inner pages) ---------- */
+.brand-name {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+.brand-name .brand-first {
+  font-family: 'Crimson Pro', 'Crimson Text', serif;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: -0.01em;
+}
+.brand-name .brand-last {
+  font-family: 'PP NeueBit', monospace;
+  font-weight: 700;
+  font-size: 38px;
+  line-height: 0.85;
+}
+
 .menu {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  width: 100%;
-  padding-top: 16px;
   font-family: 'Roboto Mono', monospace;
   font-size: 14px;
   letter-spacing: 0.04em;
+  padding-top: 16px;
+}
+
+/* Homepage: items spread full-width */
+.menu--home {
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Inner pages: items left-aligned, next to brand */
+.menu--inner {
+  justify-content: flex-start;
+  gap: 8px;
+  margin-left: 40px;
 }
 
 .menu-item {

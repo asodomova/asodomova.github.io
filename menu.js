@@ -12,8 +12,7 @@
 
   const topbar = document.createElement('header');
   topbar.className = 'topbar';
-  topbar.innerHTML = `
-    <nav class="menu" aria-label="Primary">
+  const menuItems = `
       <div class="menu-item ${isAbout ? 'is-current' : ''}">
         <a class="label" href="about-prose.html">[ABOUT]</a>
         <div class="submenu">
@@ -31,9 +30,23 @@
       </div>
       <div class="menu-item ${isWhere ? 'is-current' : ''}">
         <a class="label" href="where.html">&lt;WHERE TO NEXT?&gt;</a>
-      </div>
-    </nav>
-  `;
+      </div>`;
+
+  if (page === 'home') {
+    topbar.innerHTML = `
+      <nav class="menu menu--home" aria-label="Primary">
+        ${menuItems}
+      </nav>`;
+  } else {
+    topbar.innerHTML = `
+      <a href="index.html" class="brand-name" aria-label="Home">
+        <span class="brand-first">Adéla</span>
+        <span class="brand-last">Sodomová</span>
+      </a>
+      <nav class="menu menu--inner" aria-label="Primary">
+        ${menuItems}
+      </nav>`;
+  }
   document.body.prepend(topbar);
 
   const footer = document.createElement('div');
