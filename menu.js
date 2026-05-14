@@ -14,7 +14,7 @@
   topbar.className = 'topbar';
   const menuItems = `
       <div class="menu-item ${isAbout ? 'is-current' : ''}">
-        <a class="label" href="about.html">[ABOUT]</a>
+        <a class="label" href="about-prose.html">[ABOUT]</a>
         <div class="submenu">
           <a href="about-prose.html">PROSE FORM</a>
           <a href="about-bullet.html">BULLET FORM</a>
