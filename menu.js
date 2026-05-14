@@ -17,18 +17,9 @@
     <nav class="menu" aria-label="Primary">
       <div class="menu-item ${isAbout ? 'is-current' : ''}">
         <a class="label" href="about-prose.html">[ABOUT]</a>
-        <div class="submenu">
-          <a href="about-prose.html">PROSE FORM</a>
-          <a href="about-bullet.html">BULLET FORM</a>
-        </div>
       </div>
       <div class="menu-item ${isWork ? 'is-current' : ''}">
         <a class="label" href="work.html">[WORK]</a>
-        <div class="submenu">
-          <a href="work.html#essays">ESSAYS</a>
-          <a href="work.html#academic">ACADEMIC WORK</a>
-          <a href="work.html#design">DESIGN PORTFOLIO</a>
-        </div>
       </div>
       <div class="menu-item ${isWhere ? 'is-current' : ''}">
         <a class="label" href="where.html">[WHERE TO NEXT?]</a>
