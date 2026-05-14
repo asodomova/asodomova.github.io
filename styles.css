@@ -71,12 +71,13 @@ a {
 
 .menu {
   display: flex;
-  gap: 12px;
-  padding-top: 22px;
-  font-family: 'Roboto Mono', monospace;
-  letter-spacing: 0.02em;
-  margin-left: auto;
+  justify-content: space-between;
   align-items: flex-start;
+  width: 100%;
+  padding-top: 16px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.04em;
 }
 
 .menu-item {
@@ -85,9 +86,8 @@ a {
 }
 
 .menu-item .label {
-  display: block;
+  display: inline-block;
   white-space: nowrap;
-  font-size: 14px;
   line-height: 1;
   padding: 5px 8px;
   transition: color 0.12s ease, background-color 0.12s ease;
@@ -96,6 +96,20 @@ a {
 .menu-item:hover .label {
   color: var(--bg);
   background-color: var(--ink);
+}
+
+.menu-item .submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 10px;
+  padding-left: 8px;
+  font-size: 11px;
+}
+
+.menu-item .submenu a {
+  white-space: nowrap;
+  letter-spacing: 0.04em;
 }
 
 /* current page indicator */
