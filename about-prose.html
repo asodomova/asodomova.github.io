@@ -10,23 +10,23 @@
   /* ── Heading ── */
   .about-title {
     margin-top: 70px;
-    font-family: 'Crimson Text', serif;
-    font-size: 61px;
+    font-family: 'Roboto mono', regular;
+    font-size: 50px;
     line-height: 1;
     font-weight: 400;
   }
   .about-title .em {
-    font-family: 'PP NeueBit', monospace;
-    font-weight: 700;
-    font-size: 75px;
+    font-family: 'Roboto mono', regular;
+    font-weight: 400;
+    font-size: 50px;
   }
 
   /* ── Choice rows ── */
   #choices {
-    margin-top: 28px;
+    margin-top: 0px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     font-family: 'Roboto Mono', monospace;
     font-size: 14px;
     letter-spacing: 0.04em;
@@ -227,16 +227,16 @@
     // ── Main sequence ────────────────────────────────────────────────────
     setTimeout(function () {
 
-      // 1. Show prose row, type "Prose form"
+      // 1. Show prose row, type "<Prose form"
       rowProse.classList.add('visible');
-      typeString(proseWord, 'Prose form', 52, function () {
+      typeString(proseWord, '<Prose form', 52, function () {
 
         // 2. Type three dots
         typeDots(function () {
 
           // 3. Show bullet row instantly
           rowBullet.classList.add('visible');
-          bulletWord.textContent = 'Bullet form';
+          bulletWord.textContent = '• Bullet form';
 
           // 4. Start waiting: cycle the dots
           phase = 'waiting';
