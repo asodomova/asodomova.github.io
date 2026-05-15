@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>About — Prose form · Adéla Sodomová</title>
+<title>About · Adéla Sodomová</title>
 <meta name="viewport" content="width=960" />
 <link rel="stylesheet" href="styles.css" />
 <style>
+
+  /* ── Heading ── */
   .about-title {
     margin-top: 70px;
     font-family: 'Crimson Text', serif;
     font-size: 61px;
     line-height: 1;
+    font-weight: 400;
   }
   .about-title .em {
     font-family: 'PP NeueBit', monospace;
@@ -18,53 +21,236 @@
     font-size: 75px;
   }
 
-  .form-toggle {
-    margin-top: 6px;
+  /* ── Choice rows ── */
+  #choices {
+    margin-top: 28px;
     display: flex;
-    gap: 28px;
-    font-family: 'Inter', sans-serif;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'Roboto Mono', monospace;
     font-size: 14px;
     letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
-  .form-toggle a { position: relative; }
-  .form-toggle a.active { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
-  .form-toggle a:not(.active):hover { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 
-  .article {
-    margin-top: 30px;
+  .choice-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .choice-row.visible { opacity: 1; }
+
+  .choice-prefix { user-select: none; }
+
+  .choice-btn {
+    display: inline-block;
+    padding: 4px 8px;
+    transition: color 0.12s ease, background-color 0.12s ease;
+    white-space: pre; /* keep trailing spaces in dots */
+  }
+  .choice-btn:hover,
+  .choice-btn.active {
+    color: var(--bg);
+    background-color: var(--ink);
+  }
+
+  /* ── Content sections ── */
+  .content-section {
+    display: none;
+    opacity: 0;
+    margin-top: 48px;
+    transition: opacity 0.5s ease;
+  }
+  .content-section.visible { opacity: 1; }
+
+  /* ── Prose layout: text + portrait side by side ── */
+  .prose-layout {
+    display: flex;
+    gap: 64px;
+    align-items: flex-start;
+  }
+
+  .prose-text {
+    flex: 1;
     font-family: 'Inter', sans-serif;
     font-size: 18px;
+    line-height: 1.6;
     text-align: justify;
   }
+  .prose-text p { margin: 0 0 1.2em; }
+  .prose-text a { transition: opacity 0.15s ease; }
+  .prose-text a:hover { opacity: 0.6; }
+  .prose-text a.link-blue   { color: var(--blue);   }
+  .prose-text a.link-violet { color: var(--purple); }
+  .prose-text a.link-pink   { color: var(--pink);   }
 
-  .article a {
-    transition: opacity 0.15s ease;
+  .ascii-portrait {
+    width: 340px;
+    flex-shrink: 0;
+    margin-top: 4px;
+    image-rendering: pixelated;
   }
-  .article a:hover { opacity: 0.6; }
 
-  .article a.link-blue    { color: var(--blue);   }
-  .article a.link-violet  { color: var(--purple); }
-  .article a.link-pink    { color: var(--pink);   }
+  /* ── PDF ── */
+  .pdf-frame {
+    width: 100%;
+    max-width: 770px;
+    aspect-ratio: 1 / 1.414;
+    border: 1px solid var(--rule);
+    background: #fff;
+    display: block;
+  }
+  .pdf-fallback {
+    margin-top: 14px;
+    font-size: 14px;
+    color: rgba(0,0,0,0.6);
+  }
+  .pdf-fallback a { color: var(--blue); border-bottom: 1px solid currentColor; }
+
 </style>
 </head>
 <body data-page="about-prose" data-footer="right">
 
-  <h1 class="about-title">About <span class="em">me</span></h1>
+  <h1 class="about-title">&lt;About <span class="em">me</span>&gt;</h1>
 
-  <div class="form-toggle">
-    <a href="about-prose.html" class="active">Prose form</a>
-    <a href="about-bullet.html">Bullet form</a>
+  <div id="choices">
+    <!-- Prose row: text typed letter by letter, dots cycle while waiting -->
+    <div class="choice-row" id="row-prose">
+      <span class="choice-btn" id="btn-prose"><span id="prose-word"></span><span id="prose-dots"></span></span>
+    </div>
+
+    <!-- Bullet row: dash first, then label all at once -->
+    <div class="choice-row" id="row-bullet">
+      <span class="choice-prefix">–</span>
+      <span class="choice-btn" id="btn-bullet"><span id="bullet-word"></span></span>
+    </div>
   </div>
 
-  <article class="article">
-    <p>Fascinated by CGI, at the age of 15 Adéla moved away from her native <a href="https://en.wikipedia.org/wiki/Olomouc" class="link-blue" target="_blank" rel="noopener">Olomouc</a> to study animation in <a href="https://en.wikipedia.org/wiki/Brno" class="link-violet" target="_blank" rel="noopener">Brno</a>, with hopes of becoming an animator for video game studios. However, after numerous warnings from several sides not to pursue this path, she finally internalized the disillusionment of working in an <a href="https://journals.sagepub.com/doi/abs/10.1177/1350508415572509" class="link-pink" target="_blank" rel="noopener">exploitative commercial sector</a> and thought better of it. To the joy of rational-actor theorists and the surprise of her family, she decided to diversify her skills to better her chances on the job market and, at the last minute, applied for psychology at Masaryk University.</p>
+  <!-- Prose content -->
+  <div class="content-section" id="content-prose">
+    <div class="prose-layout">
+      <div class="prose-text">
+        <p>Fascinated by CGI, at the age of 15 Adéla moved away from her native <a href="https://en.wikipedia.org/wiki/Olomouc" class="link-blue" target="_blank" rel="noopener">Olomouc</a> to study animation in <a href="https://en.wikipedia.org/wiki/Brno" class="link-violet" target="_blank" rel="noopener">Brno</a>, with hopes of becoming an animator for video game studios. However, after numerous warnings from several sides not to pursue this path, she finally internalized the disillusionment of working in an <a href="https://journals.sagepub.com/doi/abs/10.1177/1350508415572509" class="link-pink" target="_blank" rel="noopener">exploitative commercial sector</a> and thought better of it. To the joy of rational-actor theorists and the surprise of her family, she decided to diversify her skills to better her chances on the job market and, at the last minute, applied for psychology at Masaryk University.</p>
+        <p>After another round of disillusionment (and also for the plot), a year later she also enrolled in a second major in sociology. This journey and her eternal nosiness for trying to figure it all out have landed her at the University of Zürich, where she's finishing her master's degree with plans for a PhD to follow. Here, she spends considerable effort trying to make the field less inward-looking and depoliticized.</p>
+        <p>She snoops in antique shops every Saturday, spends her evenings editing <a href="https://wikimediafoundation.org/what-we-do/open-the-knowledge/wikipedia-needs-more-women/" class="link-violet" target="_blank" rel="noopener">Wikipedia to add more women</a>, and tries to finish all international seasons of <a href="https://drive.google.com/drive/folders/1t-eMmeGJOGAOvYJKtGtPJoDGS07QF6hs" class="link-pink" target="_blank" rel="noopener">The Traitors</a>. All the time, though, in the back of her mind, she continues to wonder why things are the way they are – and whether they could be different.</p>
+      </div>
+      <img class="ascii-portrait" src="assets/ascii-portrait.png" alt="" />
+    </div>
+  </div>
 
-    <p>After another round of disillusionment (and also for the plot), a year later she also enrolled in a second major in sociology. This journey and her eternal nosiness for trying to figure it all out have landed her at the University of Zürich, where she's finishing her master's degree with plans for a PhD to follow. Here, she spends considerable effort trying to make the field less inward-looking and depoliticized.</p>
-
-    <p>She snoops in antique shops every Saturday, spends her evenings editing <a href="https://wikimediafoundation.org/what-we-do/open-the-knowledge/wikipedia-needs-more-women/" class="link-violet" target="_blank" rel="noopener">Wikipedia to add more women</a>, and tries to finish all international seasons of <a href="https://drive.google.com/drive/folders/1t-eMmeGJOGAOvYJKtGtPJoDGS07QF6hs" class="link-pink" target="_blank" rel="noopener">The Traitors</a>. All the time, though, in the back of her mind, she continues to wonder why things are the way they are – and whether they could be different.</p>
-  </article>
+  <!-- Bullet (CV) content -->
+  <div class="content-section" id="content-bullet">
+    <iframe class="pdf-frame"
+            src="assets/sodomova_CV_march.pdf#view=FitH"
+            title="Adéla Sodomová — CV"
+            loading="lazy"></iframe>
+    <p class="pdf-fallback">
+      Can't see the CV? <a href="assets/sodomova_CV_march.pdf" target="_blank" rel="noopener">Open the PDF in a new tab →</a>
+    </p>
+  </div>
 
   <script src="menu.js"></script>
+  <script>
+  (function () {
+    var proseWord  = document.getElementById('prose-word');
+    var proseDots  = document.getElementById('prose-dots');
+    var bulletWord = document.getElementById('bullet-word');
+    var rowProse   = document.getElementById('row-prose');
+    var rowBullet  = document.getElementById('row-bullet');
+    var btnProse   = document.getElementById('btn-prose');
+    var btnBullet  = document.getElementById('btn-bullet');
+    var contentProse  = document.getElementById('content-prose');
+    var contentBullet = document.getElementById('content-bullet');
+
+    var phase = 'animating'; // 'animating' | 'waiting' | 'chosen'
+    var dotsTimer = null;
+
+    // ── Typewriter: type a string char by char ───────────────────────────
+    function typeString(el, str, delay, done) {
+      var i = 0;
+      var t = setInterval(function () {
+        el.textContent += str[i++];
+        if (i >= str.length) { clearInterval(t); if (done) done(); }
+      }, delay);
+    }
+
+    // ── Type dots one by one ─────────────────────────────────────────────
+    function typeDots(done) {
+      var count = 0;
+      var t = setInterval(function () {
+        proseDots.textContent += '.';
+        count++;
+        if (count >= 3) { clearInterval(t); if (done) done(); }
+      }, 240);
+    }
+
+    // ── Cycle dots while waiting ─────────────────────────────────────────
+    // Pattern: ... → .. → . → (blank) → . → .. → ... → repeat
+    var CYCLE = ['...', '.. ', '.  ', '   ', '.  ', '.. '];
+    var cycleIdx = 0;
+    function startDotsCycle() {
+      cycleIdx = 0;
+      dotsTimer = setInterval(function () {
+        cycleIdx = (cycleIdx + 1) % CYCLE.length;
+        proseDots.textContent = CYCLE[cycleIdx];
+      }, 160);
+    }
+    function stopDotsCycle() {
+      if (dotsTimer) { clearInterval(dotsTimer); dotsTimer = null; }
+      proseDots.textContent = '...';
+    }
+
+    // ── Reveal content ───────────────────────────────────────────────────
+    function showContent(which) {
+      [contentProse, contentBullet].forEach(function (el) {
+        el.style.display = 'none';
+        el.classList.remove('visible');
+      });
+      var target = which === 'prose' ? contentProse : contentBullet;
+      target.style.display = 'block';
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { target.classList.add('visible'); });
+      });
+    }
+
+    // ── Handle a choice (works for first pick + switching) ───────────────
+    function choose(which) {
+      if (phase === 'animating') return;
+      stopDotsCycle();
+      phase = 'chosen';
+      showContent(which);
+      btnProse.classList.toggle('active', which === 'prose');
+      btnBullet.classList.toggle('active', which === 'bullet');
+    }
+
+    // ── Main sequence ────────────────────────────────────────────────────
+    setTimeout(function () {
+
+      // 1. Show prose row, type "Prose form"
+      rowProse.classList.add('visible');
+      typeString(proseWord, 'Prose form', 52, function () {
+
+        // 2. Type three dots
+        typeDots(function () {
+
+          // 3. Show bullet row instantly
+          rowBullet.classList.add('visible');
+          bulletWord.textContent = 'Bullet form';
+
+          // 4. Start waiting: cycle the dots
+          phase = 'waiting';
+          setTimeout(startDotsCycle, 300);
+        });
+      });
+
+    }, 500);
+
+    // ── Click handlers ───────────────────────────────────────────────────
+    btnProse.addEventListener('click',  function () { choose('prose');  });
+    btnBullet.addEventListener('click', function () { choose('bullet'); });
+
+  })();
+  </script>
 </body>
 </html>
