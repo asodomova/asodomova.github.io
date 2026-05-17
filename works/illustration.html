@@ -7,109 +7,204 @@
 <link rel="stylesheet" href="../styles.css" />
 <base href="../" />
 <style>
-  .gallery {
-    margin-top: 60px;
-    columns: 2;
-    column-gap: 48px;
+
+  /* ── Gallery canvas ── */
+  #gallery {
+    position: relative;
+    width: 100%;
+    height: 1700px;
+    margin-top: 32px;
   }
 
-  .gallery-item {
-    break-inside: avoid;
-    margin-bottom: 64px;
-    transform-origin: center;
+  /* ── Window card ── */
+  .win {
+    position: absolute;
+    border: 1px solid var(--ink);
+    background: var(--bg);
+    user-select: none;
+    transition: box-shadow 0.12s ease;
+  }
+  .win.dragging,
+  .win:hover {
+    box-shadow: 4px 4px 0px var(--ink);
   }
 
-  /* Rotations for scattered feel */
-  .gallery-item:nth-child(4n+1) { transform: rotate(-1.8deg); }
-  .gallery-item:nth-child(4n+2) { transform: rotate(1.2deg);  margin-top: 80px; }
-  .gallery-item:nth-child(4n+3) { transform: rotate(-0.6deg); margin-top: -20px; }
-  .gallery-item:nth-child(4n+4) { transform: rotate(2.1deg);  margin-top: 40px; }
+  /* ── Title bar (drag handle) ── */
+  .win-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 8px 5px 10px;
+    border-bottom: 1px solid var(--ink);
+    cursor: grab;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .win-bar:active { cursor: grabbing; }
 
-  .gallery-item img {
+  .win-bar-dots {
+    display: grid;
+    grid-template-columns: repeat(3, 3px);
+    gap: 2px;
+    opacity: 0.4;
+    flex-shrink: 0;
+    margin-left: 10px;
+  }
+  .win-bar-dots span {
+    width: 3px;
+    height: 3px;
+    background: var(--ink);
+    border-radius: 50%;
+  }
+
+  /* ── Image ── */
+  .win-body {
+    line-height: 0;
+  }
+  .win-body img {
     display: block;
     width: 100%;
     height: auto;
+    pointer-events: none;
   }
 
-  .gallery-item.small img {
-    width: 60%;
-  }
-
-  .gallery-item.full {
-    column-span: all;
-    margin-bottom: 64px;
-  }
-
-  .gallery-item .caption {
-    margin-top: 10px;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    letter-spacing: 0.03em;
-    color: rgba(0,0,0,0.55);
-    text-transform: uppercase;
-  }
 </style>
 </head>
 <body data-page="work-essay">
+
   <article class="article">
     <h1>Illustration &amp; handdrawn animation</h1>
     <p>An ongoing notebook of drawings and short animations.</p>
   </article>
 
-  <div class="gallery">
-
-    <div class="gallery-item full">
-      <img src="assets/illustration/il-10.png" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item full">
-      <img src="assets/illustration/il-08.png" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item">
-      <img src="assets/illustration/il-01.jpg" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item">
-      <img src="assets/illustration/il-02.jpg" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item">
-      <img src="assets/illustration/il-04.png" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item">
-      <img src="assets/illustration/il-05.png" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item small">
-      <img src="assets/illustration/il-03.png" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item small">
-      <img src="assets/illustration/il-09.gif" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item small">
-      <img src="assets/illustration/il-07.gif" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-    <div class="gallery-item small">
-      <img src="assets/illustration/il-06.gif" alt="" />
-      <div class="caption">Title / annotation coming soon</div>
-    </div>
-
-  </div>
+  <div id="gallery"></div>
 
   <script src="menu.js"></script>
+  <script>
+  (function () {
+
+    // ── Window definitions ──────────────────────────────────────────────
+    // Each entry: [src, label, width (px), left%, top (px), rotation (deg)]
+    // Left is expressed as % of gallery width so it adapts to container.
+    // Top is absolute px within the gallery canvas.
+    var WINDOWS = [
+      // Large paintings — upper area
+      { src: 'assets/illustration/il-10.png', label: 'Zmatení',   w: 480, lp: 0.36, t:  20, r: -1.5 },
+      { src: 'assets/illustration/il-08.png', label: 'Diagnóza',  w: 450, lp: 0.01, t:  40, r:  2.0 },
+
+      // Mid-size works — middle tier
+      { src: 'assets/illustration/il-04.png', label: '—',         w: 310, lp: 0.62, t: 280, r: -2.2 },
+      { src: 'assets/illustration/il-01.jpg', label: '—',         w: 300, lp: 0.06, t: 440, r:  1.8 },
+      { src: 'assets/illustration/il-02.jpg', label: '—',         w: 295, lp: 0.42, t: 520, r: -1.0 },
+      { src: 'assets/illustration/il-05.png', label: '—',         w: 305, lp: 0.72, t: 560, r:  2.8 },
+      { src: 'assets/illustration/il-03.png', label: '—',         w: 270, lp: 0.22, t: 680, r: -2.5 },
+
+      // Animations — bottom tier, smaller
+      { src: 'assets/illustration/il-09.gif', label: '—',         w: 210, lp: 0.54, t: 820, r:  1.6 },
+      { src: 'assets/illustration/il-07.gif', label: '—',         w: 210, lp: 0.03, t: 900, r: -1.8 },
+      { src: 'assets/illustration/il-06.gif', label: '—',         w: 210, lp: 0.72, t: 960, r:  2.4 },
+    ];
+
+    var gallery = document.getElementById('gallery');
+    var zTop = 10;
+
+    // ── Build windows ────────────────────────────────────────────────────
+    WINDOWS.forEach(function (def, i) {
+      var win = document.createElement('div');
+      win.className = 'win';
+      win.style.width = def.w + 'px';
+      win.style.transform = 'rotate(' + def.r + 'deg)';
+      win.style.zIndex = i + 1;
+
+      // Position after layout is known
+      win.dataset.lp = def.lp;
+      win.dataset.t  = def.t;
+
+      // Title bar
+      var bar = document.createElement('div');
+      bar.className = 'win-bar';
+
+      var title = document.createElement('span');
+      title.textContent = def.label;
+      bar.appendChild(title);
+
+      var dots = document.createElement('div');
+      dots.className = 'win-bar-dots';
+      for (var d = 0; d < 9; d++) {
+        var dot = document.createElement('span');
+        dots.appendChild(dot);
+      }
+      bar.appendChild(dots);
+      win.appendChild(bar);
+
+      // Image
+      var body = document.createElement('div');
+      body.className = 'win-body';
+      var img = document.createElement('img');
+      img.src = def.src;
+      img.alt = '';
+      body.appendChild(img);
+      win.appendChild(body);
+
+      gallery.appendChild(win);
+
+      // ── Drag logic ────────────────────────────────────────────────────
+      var dragging = false;
+      var startMouseX, startMouseY, startLeft, startTop;
+
+      bar.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return;
+        e.preventDefault();
+
+        dragging = true;
+        win.classList.add('dragging');
+        win.style.zIndex = ++zTop;
+
+        startMouseX = e.clientX;
+        startMouseY = e.clientY;
+        startLeft   = win.offsetLeft;
+        startTop    = win.offsetTop;
+
+        function onMove(e) {
+          if (!dragging) return;
+          win.style.left = (startLeft + e.clientX - startMouseX) + 'px';
+          win.style.top  = (startTop  + e.clientY - startMouseY) + 'px';
+        }
+
+        function onUp() {
+          dragging = false;
+          win.classList.remove('dragging');
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+        }
+
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      // Clicking anywhere on the window brings it forward
+      win.addEventListener('mousedown', function () {
+        win.style.zIndex = ++zTop;
+      });
+    });
+
+    // ── Set initial positions once gallery width is known ────────────────
+    function positionWindows() {
+      var W = gallery.offsetWidth;
+      gallery.querySelectorAll('.win').forEach(function (win) {
+        var lp = parseFloat(win.dataset.lp);
+        var t  = parseFloat(win.dataset.t);
+        win.style.left = Math.round(lp * W) + 'px';
+        win.style.top  = t + 'px';
+      });
+    }
+
+    positionWindows();
+    window.addEventListener('resize', positionWindows);
+
+  })();
+  </script>
 </body>
 </html>
