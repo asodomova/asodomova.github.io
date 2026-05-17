@@ -7,27 +7,208 @@
 <link rel="stylesheet" href="../styles.css" />
 <base href="../" />
 <style>
-  .tier { display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: center;
-    border-top: 1px solid var(--rule); padding: 14px 0; }
-  .tier:last-child { border-bottom: 1px solid var(--rule); }
-  .tier .grade { font-family: 'Crimson Text', serif; font-size: 32px; font-style: italic; }
-  .tier ul { margin: 0; padding-left: 18px; }
+
+  /* ── Page header ── */
+  .page-header {
+    margin-top: 70px;
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .page-header h1 {
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0;
+  }
+  .page-header p {
+    margin: 10px 0 0;
+    font-family: inherit;
+    font-size: 13px;
+    color: rgba(0,0,0,0.5);
+  }
+
+  /* ── Entry list ── */
+  .entries {
+    margin-top: 48px;
+    max-width: 820px;
+  }
+
+  .entry {
+    border-top: 1px solid var(--rule);
+    padding: 16px 0;
+  }
+  .entry:last-child { border-bottom: 1px solid var(--rule); }
+
+  .entry-name {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .entry-links {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .entry-link {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--blue);
+    border-bottom: 1px solid currentColor;
+    width: fit-content;
+    word-break: break-all;
+  }
+  .entry-link:hover { opacity: 0.65; }
+
+  .entry-notes {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: rgba(0,0,0,0.55);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .entry-notes li::before {
+    content: '// ';
+    font-family: 'Roboto Mono', monospace;
+    font-size: 11px;
+  }
+
 </style>
 </head>
 <body data-page="where-link">
-  <article class="article" style="max-width: 820px;">
-    <h1>My tierlist of academic personal websites</h1>
-    <p>The criteria are unscientific: does the page load fast, does the writing feel personal, can I find a paper without rage-clicking. Tier S is reserved for sites that look like they were made by the same person who writes the work.</p>
 
-    <div class="tier"><div class="grade" style="color: var(--blue)">S</div>
-      <ul><li>Maciej Cegłowski's <em>Idle Words</em></li><li>Robin Sloan's homepage</li><li>Frank Chimero, when it existed</li></ul></div>
-    <div class="tier"><div class="grade">A</div>
-      <ul><li>Most of the IAS Princeton folks</li><li>Cosma Shalizi's notebooks</li></ul></div>
-    <div class="tier"><div class="grade">B</div>
-      <ul><li>Anyone whose site is just a Google Scholar page in disguise</li></ul></div>
-    <div class="tier"><div class="grade" style="color: var(--pink)">F</div>
-      <ul><li>Departmental templates with a stock photo of a microscope</li></ul></div>
-  </article>
+  <div class="page-header">
+    <h1>{ tierlist of academic personal websites }</h1>
+    <p>// criteria are unscientific. does it load fast, does it feel personal, can I find a paper without rage-clicking.</p>
+  </div>
+
+  <div class="entries">
+
+    <div class="entry">
+      <div class="entry-name">Matthew Dupraz</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://mattdupraz.github.io" target="_blank" rel="noopener">mattdupraz.github.io</a>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Zdeněk Pospíšil</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://www.math.muni.cz/~pospisil/" target="_blank" rel="noopener">math.muni.cz/~pospisil</a>
+      </div>
+      <ul class="entry-notes">
+        <li>absolutní vítěz</li>
+        <li>největší joker</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Dalibor Pražák</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://www.karlin.mff.cuni.cz/~prazak/" target="_blank" rel="noopener">karlin.mff.cuni.cz/~prazak</a>
+      </div>
+      <ul class="entry-notes">
+        <li>absolutní vítěz nejlepšího layoutu</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Lubomír Košťál</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://web.archive.org/web/20180302200735/https://www.biomed.cas.cz/~kostal/" target="_blank" rel="noopener">web.archive.org · biomed.cas.cz/~kostal</a>
+      </div>
+      <ul class="entry-notes">
+        <li>nejlepší prezentace sama sebe</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Kaplický</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://www.karlin.mff.cuni.cz/~kaplicky/pages/refs.php" target="_blank" rel="noopener">karlin.mff.cuni.cz/~kaplicky</a>
+      </div>
+      <ul class="entry-notes">
+        <li>absolutní vítěz misc links</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Filozof Marek Pícha</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://istvantracnik.blogspot.com/" target="_blank" rel="noopener">istvantracnik.blogspot.com</a>
+        <a class="entry-link" href="https://argumentace.blogspot.com/search/label/sobeck%C3%A9%20ok%C3%A9nko" target="_blank" rel="noopener">argumentace.blogspot.com · sobecké okénko</a>
+        <a class="entry-link" href="https://www.youtube.com/watch?v=IgIMU-64Woc&t=220s" target="_blank" rel="noopener">youtube · IgIMU-64Woc</a>
+      </div>
+      <ul class="entry-notes">
+        <li>absolutní vítěz disciplíny roztomilé rodičovství</li>
+        <li>absolutní vítěz videocreator</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Petr Hasil</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://www.math.muni.cz/~hasil/Data/CZ/Ptest.htm" target="_blank" rel="noopener">math.muni.cz/~hasil · Ptest</a>
+        <a class="entry-link" href="https://www.math.muni.cz/~hasil/Data/CZ/Tales.htm" target="_blank" rel="noopener">math.muni.cz/~hasil · Tales</a>
+      </div>
+      <ul class="entry-notes">
+        <li>absolutní vítěz v kategorii creative coding</li>
+        <li>čestné místo v kategorii roztomilé rodičovství</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Josef Janyška</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://www.math.muni.cz/~janyska/" target="_blank" rel="noopener">math.muni.cz/~janyska</a>
+      </div>
+      <ul class="entry-notes">
+        <li>absolutní vítěz neztrácení času (nejen na css)</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Simon Hilscher</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://www.math.muni.cz/~hilscher/index_cz.html" target="_blank" rel="noopener">math.muni.cz/~hilscher</a>
+      </div>
+      <ul class="entry-notes">
+        <li>vítěz v kategorii nejširší záběr doporučených hotelů, chat, sportovních cvičišť, stránek na zjišťování počasí a dalšího</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Rikard von Unge</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://monoceros.physics.muni.cz/~unge/" target="_blank" rel="noopener">monoceros.physics.muni.cz/~unge</a>
+      </div>
+      <ul class="entry-notes">
+        <li>honorable mention za vtipnou fotografii</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-name">Prof. Jiří Krtička</div>
+      <div class="entry-links">
+        <a class="entry-link" href="https://www.physics.muni.cz/~krticka/" target="_blank" rel="noopener">physics.muni.cz/~krticka</a>
+      </div>
+      <ul class="entry-notes">
+        <li>cute básnická tvorba jeho ženy</li>
+      </ul>
+    </div>
+
+  </div>
+
   <script src="menu.js"></script>
 </body>
 </html>
