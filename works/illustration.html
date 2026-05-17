@@ -8,6 +8,26 @@
 <base href="../" />
 <style>
 
+  /* ── Page header ── */
+  .page-header {
+    margin-top: 70px;
+    font-family: 'Roboto Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .page-header h1 {
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0;
+  }
+  .page-header p {
+    margin: 10px 0 0;
+    font-family: inherit;
+    font-size: 13px;
+    color: rgba(0,0,0,0.5);
+  }
+
   /* ── Gallery canvas ── */
   #gallery {
     position: relative;
@@ -74,10 +94,10 @@
 </head>
 <body data-page="work-essay">
 
-  <article class="article">
-    <h1>Illustration &amp; animation</h1>
-    <p>An ongoing notebook of drawings and short animations.</p>
-  </article>
+  <div class="page-header">
+    <h1>{ Illustration &amp; animation }</h1>
+    <p>// an ongoing notebook of drawings and short animations</p>
+  </div>
 
   <div id="gallery"></div>
 
@@ -99,12 +119,12 @@
       { src: 'assets/illustration/il-01.jpg', label: '—',         w: 300, lp: 0.06, t: 440, r:  1.8 },
       { src: 'assets/illustration/il-02.jpg', label: '—',         w: 295, lp: 0.42, t: 520, r: -1.0 },
       { src: 'assets/illustration/il-05.png', label: '—',         w: 305, lp: 0.72, t: 560, r:  2.8 },
-      { src: 'assets/illustration/il-03.png', label: '—',         w: 270, lp: 0.22, t: 680, r: -2.5 },
+      { src: 'assets/illustration/il-03.png', label: '—',         w: 300, lp: 0.22, t: 680, r: -2.5 },
 
-      // Animations — bottom tier, smaller
-      { src: 'assets/illustration/il-09.gif', label: '—',         w: 210, lp: 0.54, t: 820, r:  1.6 },
-      { src: 'assets/illustration/il-07.gif', label: '—',         w: 210, lp: 0.03, t: 900, r: -1.8 },
-      { src: 'assets/illustration/il-06.gif', label: '—',         w: 210, lp: 0.72, t: 960, r:  2.4 },
+      // Animations — bottom tier
+      { src: 'assets/illustration/il-09.gif', label: '—',         w: 280, lp: 0.54, t: 820, r:  1.6 },
+      { src: 'assets/illustration/il-07.gif', label: '—',         w: 280, lp: 0.03, t: 900, r: -1.8 },
+      { src: 'assets/illustration/il-06.gif', label: '—',         w: 280, lp: 0.72, t: 960, r:  2.4 },
     ];
 
     var gallery = document.getElementById('gallery');
