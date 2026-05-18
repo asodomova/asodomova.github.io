@@ -15,6 +15,10 @@
   const menuItems = `
       <div class="menu-item ${isAbout ? 'is-current' : ''}">
         <a class="label" href="about.html">[ABOUT]</a>
+        <div class="submenu">
+          <span>PROSE FORM</span>
+          <span>BULLET FORM</span>
+        </div>
       </div>
       <div class="menu-item ${isWork ? 'is-current' : ''}">
         <a class="label" href="work.html">{ WORK }</a>
