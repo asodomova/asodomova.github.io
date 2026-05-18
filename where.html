@@ -69,33 +69,51 @@
   .floater-small:hover { color: var(--ink); }
 
   /* ── Pixelated speech bubble for hoodmaps ── */
+
+  /* Wrapper: handles position, opacity, transition, and the unclipped tail */
   .hood-bubble {
     position: absolute;
     top: calc(100% + 16px);
     left: -12px;
-    width: 220px;
-    white-space: normal;
     pointer-events: none;
     z-index: 20;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.16s ease, transform 0.16s ease;
+  }
 
+  /* Inner box: pixel-art chamfered corners via clip-path */
+  .hood-bubble-box {
+    display: block;
+    width: 220px;
+    white-space: normal;
     font-family: 'PP NeueBit', monospace;
     font-weight: 700;
     font-size: 15px;
     line-height: 1.45;
     letter-spacing: 0.03em;
     color: var(--ink);
-
     padding: 11px 14px;
     background: var(--bg);
     border: 2px solid var(--ink);
-    box-shadow: 4px 4px 0 var(--ink);
-
-    opacity: 0;
-    transform: translateY(5px);
-    transition: opacity 0.16s ease, transform 0.16s ease;
+    /* 2-step pixel staircase at each corner */
+    clip-path: polygon(
+      8px 0%,   calc(100% - 8px) 0%,
+      calc(100% - 4px) 2px,
+      100% 8px,
+      100% calc(100% - 8px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 8px) 100%, 8px 100%,
+      4px calc(100% - 2px),
+      0% calc(100% - 8px),
+      0% 8px,
+      4px 2px
+    );
+    /* drop-shadow respects the clipped silhouette; box-shadow wouldn't */
+    filter: drop-shadow(4px 4px 0 var(--ink));
   }
 
-  /* Pixel-art tail: two rectangles forming a stepped notch pointing up */
+  /* Stepped pixel tail on the wrapper so it isn't clipped */
   .hood-bubble::before,
   .hood-bubble::after {
     content: '';
@@ -178,7 +196,10 @@
       if (item.tooltip) {
         const bubble = document.createElement('span');
         bubble.className = 'hood-bubble';
-        bubble.textContent = item.tooltip;
+        const box = document.createElement('span');
+        box.className = 'hood-bubble-box';
+        box.textContent = item.tooltip;
+        bubble.appendChild(box);
         a.appendChild(bubble);
       }
 
