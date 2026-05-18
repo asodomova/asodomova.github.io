@@ -138,38 +138,37 @@
   .scroll-hint-label {
     font-family: 'Roboto Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
   }
 
-  /* Animated arrow: a line that pulses downward */
-  .scroll-hint-arrow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    animation: arrow-pulse 1.8s ease-in-out infinite;
+  /* ── Drawn arrow (SVG, animated with stroke-dashoffset) ── */
+  .scroll-arrow {
+    overflow: visible;
+    flex-shrink: 0;
   }
 
-  .scroll-hint-arrow .arrow-line {
-    width: 1px;
-    height: 22px;
-    background: currentColor;
+  .arrow-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    pathLength: 1;
+    animation: draw-line 2.4s ease-in-out infinite;
+  }
+  .arrow-head {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw-line 2.4s ease-in-out infinite;
+    animation-delay: 0.55s;
   }
 
-  .scroll-hint-arrow .arrow-head {
-    width: 7px;
-    height: 7px;
-    border-right: 1px solid currentColor;
-    border-bottom: 1px solid currentColor;
-    transform: rotate(45deg) translate(-2px, -2px);
-  }
-
-  @keyframes arrow-pulse {
-    0%, 100% { transform: translateY(0);   opacity: 0.35; }
-    50%       { transform: translateY(5px); opacity: 0.7;  }
+  @keyframes draw-line {
+    0%        { stroke-dashoffset: 1; opacity: 0; }
+    5%        { opacity: 1; }
+    55%       { stroke-dashoffset: 0; opacity: 1; }
+    80%       { stroke-dashoffset: 0; opacity: 0; }
+    100%      { stroke-dashoffset: 1; opacity: 0; }
   }
 
 </style>
@@ -217,10 +216,14 @@
       <!-- Scrollable hint: label + animated arrow -->
       <div class="scroll-hint">
         <span class="scroll-hint-label">scrollable</span>
-        <div class="scroll-hint-arrow">
-          <div class="arrow-line"></div>
-          <div class="arrow-head"></div>
-        </div>
+        <svg class="scroll-arrow" width="12" height="60" viewBox="0 0 12 60" fill="none">
+          <path class="arrow-line" pathLength="1"
+                d="M 6 2 L 6 48"
+                stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+          <path class="arrow-head" pathLength="1"
+                d="M 2 42 L 6 50 L 10 42"
+                stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
       </div>
 
     </div>
