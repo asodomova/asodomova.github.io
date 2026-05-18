@@ -42,11 +42,11 @@
     align-items: flex-start;
   }
 
-  /* ── Left: 2×2 grid of static brand images ── */
+  /* ── Left: brand images stacked vertically ── */
   .pm-statics {
     flex: 0 0 320px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
   }
 
@@ -68,6 +68,7 @@
 
   .scroll-frames {
     display: flex;
+    flex-direction: column;
     gap: 24px;
     flex: 1;
     min-width: 0;
@@ -115,7 +116,7 @@
 
   /* ── Scrollable viewport ── */
   .scroll-win-body {
-    height: 520px;
+    height: 600px;
     overflow-y: hidden;
     position: relative;
   }
