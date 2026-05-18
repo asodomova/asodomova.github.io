@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://asodomova.github.io/sitemap.xml
