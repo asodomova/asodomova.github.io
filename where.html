@@ -67,6 +67,58 @@
     color: rgba(0,0,0,0.45);
   }
   .floater-small:hover { color: var(--ink); }
+
+  /* ── Pixelated speech bubble for hoodmaps ── */
+  .hood-bubble {
+    position: absolute;
+    top: calc(100% + 16px);
+    left: -12px;
+    width: 220px;
+    white-space: normal;
+    pointer-events: none;
+    z-index: 20;
+
+    font-family: 'PP NeueBit', monospace;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    color: var(--ink);
+
+    padding: 11px 14px;
+    background: var(--bg);
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.16s ease, transform 0.16s ease;
+  }
+
+  /* Pixel-art tail: two rectangles forming a stepped notch pointing up */
+  .hood-bubble::before,
+  .hood-bubble::after {
+    content: '';
+    position: absolute;
+    background: var(--ink);
+  }
+  .hood-bubble::before {
+    top: -8px;
+    left: 18px;
+    width: 2px;
+    height: 8px;
+  }
+  .hood-bubble::after {
+    top: -8px;
+    left: 14px;
+    width: 6px;
+    height: 2px;
+  }
+
+  .floater:hover .hood-bubble {
+    opacity: 1;
+    transform: translateY(0);
+  }
 </style>
 </head>
 <body data-page="where">
@@ -82,7 +134,7 @@
     const items = [
       { text: 'Guerilla Open Access Manifesto', href: 'links/guerilla.html', x: 5, y: 8 },
       { text: 'My tierlist of academic personal websites', href: 'links/tierlist.html', x: 18, y: 40 },
-      { text: 'hoodmaps.com', href: 'https://hoodmaps.com/london-neighborhood-map', x: 68, y: 16, small: true },
+      { text: 'hoodmaps.com', href: 'https://hoodmaps.com/london-neighborhood-map', x: 68, y: 16, small: true, tooltip: 'an open, community-maintained map of different cities and the vibes of their neighbourhoods' },
       { text: 'sinceyouarrived.world/taken', href: 'https://sinceyouarrived.world/taken', x: 60, y: 56, small: true },
     ];
 
@@ -122,6 +174,14 @@
       inner.className = 'inner';
       inner.textContent = item.text;
       a.appendChild(inner);
+
+      if (item.tooltip) {
+        const bubble = document.createElement('span');
+        bubble.className = 'hood-bubble';
+        bubble.textContent = item.tooltip;
+        a.appendChild(bubble);
+      }
+
       stage.appendChild(a);
     });
   </script>
