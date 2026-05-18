@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url><loc>https://asodomova.github.io/</loc></url>
-  <url><loc>https://asodomova.github.io/about-prose.html</loc></url>
+  <url><loc>https://asodomova.github.io/about.html</loc></url>
   <url><loc>https://asodomova.github.io/work.html</loc></url>
   <url><loc>https://asodomova.github.io/where.html</loc></url>
 
@@ -17,8 +17,5 @@
   <url><loc>https://asodomova.github.io/links/guerilla.html</loc></url>
   <url><loc>https://asodomova.github.io/links/tierlist.html</loc></url>
   <url><loc>https://asodomova.github.io/links/projects.html</loc></url>
-  <url><loc>https://asodomova.github.io/links/calvino.html</loc></url>
-  <url><loc>https://asodomova.github.io/links/slow.html</loc></url>
-  <url><loc>https://asodomova.github.io/links/surf.html</loc></url>
 
 </urlset>
