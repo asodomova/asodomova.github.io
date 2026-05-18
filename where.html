@@ -22,7 +22,7 @@
   .float-stage {
     position: relative;
     margin-top: 70px;
-    height: 520px;
+    height: 960px;
     width: 100%;
   }
 
@@ -132,10 +132,15 @@
     // Floating items — each one gets a random gentle drift via two CSS animations
     // (translate + a slow rotate). Hovering pauses the animation.
     const items = [
-      { text: 'Guerilla Open Access Manifesto', href: 'links/guerilla.html', x: 5, y: 8 },
-      { text: 'My tierlist of academic personal websites', href: 'links/tierlist.html', x: 18, y: 40 },
-      { text: 'hoodmaps.com', href: 'https://hoodmaps.com/london-neighborhood-map', x: 68, y: 16, small: true, tooltip: 'an open, community-maintained map of different cities and the vibes of their neighbourhoods' },
-      { text: 'sinceyouarrived.world/taken', href: 'https://sinceyouarrived.world/taken', x: 60, y: 56, small: true },
+      { text: 'Guerilla Open Access Manifesto',                             href: 'links/guerilla.html',                                     x:  3, y:  3 },
+      { text: 'hoodmaps.com',                                               href: 'https://hoodmaps.com/london-neighborhood-map',             x: 65, y:  8, small: true, tooltip: 'an open, community-maintained map of different cities and the vibes of their neighbourhoods' },
+      { text: 'my own OCR app for PDFs [for Mac]',                                                                                            x: 42, y: 17, tooltip: 'TBD' },
+      { text: 'My tierlist of academic personal websites',                  href: 'links/tierlist.html',                                      x:  4, y: 27 },
+      { text: 'my audiobook management app [for Mac]',                                                                                        x: 38, y: 37, tooltip: 'TBD' },
+      { text: 'sinceyouarrived.world/taken',                               href: 'https://sinceyouarrived.world/taken',                      x:  4, y: 47, small: true },
+      { text: 'tierlist of my favorite social theory concepts',                                                                                x: 26, y: 57, tooltip: 'TBD' },
+      { text: 'songs that have a soul, or that feel as they might as well have a soul',                                                        x:  4, y: 67, wrap: true, tooltip: 'TBD' },
+      { text: "things that I wish everybody knew about / things that I'd like everyone to know, but that is impossible, so I'm putting them here", x: 44, y: 80, wrap: true, tooltip: 'TBD' },
     ];
 
     const stage = document.getElementById('stage');
@@ -145,8 +150,9 @@
     items.forEach((item, i) => {
       const a = document.createElement('a');
       a.className = 'floater' + (item.small ? ' floater-small' : '');
-      a.href = item.href;
+      if (item.href) { a.href = item.href; } else { a.style.cursor = 'default'; }
       if (item.small) { a.target = '_blank'; a.rel = 'noopener'; }
+      if (item.wrap) { a.style.whiteSpace = 'normal'; a.style.maxWidth = '420px'; }
       a.style.left = item.x + '%';
       a.style.top = item.y + '%';
 
