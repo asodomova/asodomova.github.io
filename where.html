@@ -68,6 +68,15 @@
   }
   .floater-small:hover { color: var(--ink); }
 
+  /* ── Upcoming / TBD items ── */
+  .floater-upcoming {
+    font-family: 'Crimson Pro', 'Crimson Text', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: rgba(0,0,0,0.5);
+  }
+  .floater-upcoming:hover { color: var(--ink); }
+
   /* ── Pixelated speech bubble for hoodmaps ── */
   .hood-bubble {
     position: absolute;
@@ -132,15 +141,15 @@
     // Floating items — each one gets a random gentle drift via two CSS animations
     // (translate + a slow rotate). Hovering pauses the animation.
     const items = [
-      { text: 'Guerilla Open Access Manifesto',                             href: 'links/guerilla.html',                                     x:  3, y:  3 },
-      { text: 'hoodmaps.com',                                               href: 'https://hoodmaps.com/london-neighborhood-map',             x: 65, y:  8, small: true, tooltip: 'an open, community-maintained map of different cities and the vibes of their neighbourhoods' },
-      { text: 'my own OCR app for PDFs [for Mac]',                                                                                            x: 42, y: 17, tooltip: 'TBD' },
-      { text: 'My tierlist of academic personal websites',                  href: 'links/tierlist.html',                                      x:  4, y: 27 },
-      { text: 'my audiobook management app [for Mac]',                                                                                        x: 38, y: 37, tooltip: 'TBD' },
-      { text: 'sinceyouarrived.world/taken',                               href: 'https://sinceyouarrived.world/taken',                      x:  4, y: 47, small: true },
-      { text: 'tierlist of my favorite social theory concepts',                                                                                x: 26, y: 57, tooltip: 'TBD' },
-      { text: 'songs that have a soul, or that feel as they might as well have a soul',                                                        x:  4, y: 67, wrap: true, tooltip: 'TBD' },
-      { text: "things that I wish everybody knew about / things that I'd like everyone to know, but that is impossible, so I'm putting them here", x: 44, y: 80, wrap: true, tooltip: 'TBD' },
+      { text: 'Guerilla Open Access Manifesto',                                                                                                  href: 'links/guerilla.html',                                 x:  3, y:  4 },
+      { text: 'hoodmaps.com',                                               href: 'https://hoodmaps.com/london-neighborhood-map',             x: 65, y: 11, small: true, tooltip: 'an open, community-maintained map of different cities and the vibes of their neighbourhoods' },
+      { text: 'My tierlist of academic personal websites',                  href: 'links/tierlist.html',                                      x:  4, y: 22 },
+      { text: 'sinceyouarrived.world/taken',                               href: 'https://sinceyouarrived.world/taken',                      x: 55, y: 33, small: true },
+      { text: 'my own OCR app for PDFs [for Mac]',                                                                                            x:  5, y: 55, upcoming: true, tooltip: 'TBD' },
+      { text: 'my audiobook management app [for Mac]',                                                                                        x: 46, y: 63, upcoming: true, tooltip: 'TBD' },
+      { text: 'tierlist of my favorite social theory concepts',                                                                                x:  8, y: 72, upcoming: true, tooltip: 'TBD' },
+      { text: 'songs that have a soul, or that feel as they might as well have a soul',                                                        x: 48, y: 80, upcoming: true, wrap: true, tooltip: 'TBD' },
+      { text: "things that I wish everybody knew about / things that I'd like everyone to know, but that is impossible, so I'm putting them here", x: 5, y: 88, upcoming: true, wrap: true, tooltip: 'TBD' },
     ];
 
     const stage = document.getElementById('stage');
@@ -149,7 +158,7 @@
 
     items.forEach((item, i) => {
       const a = document.createElement('a');
-      a.className = 'floater' + (item.small ? ' floater-small' : '');
+      a.className = 'floater' + (item.small ? ' floater-small' : '') + (item.upcoming ? ' floater-upcoming' : '');
       if (item.href) { a.href = item.href; } else { a.style.cursor = 'default'; }
       if (item.small) { a.target = '_blank'; a.rel = 'noopener'; }
       if (item.wrap) { a.style.whiteSpace = 'normal'; a.style.maxWidth = '420px'; }
