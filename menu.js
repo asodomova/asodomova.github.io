@@ -1,5 +1,5 @@
 // Inject the shared topbar/menu and footer into every page.
-// Set <body data-page="..."> to one of: home, about-prose, about-bullet,
+// Set <body data-page="..."> to one of: home, about,
 // work, where, work-essay, where-link to highlight current.
 
 (function () {
