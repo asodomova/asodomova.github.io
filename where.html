@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <title>Where to next? · Adéla Sodomová</title>
 <meta name="description" content="Adéla Sodoma personal website" />
-<meta name="viewport" content="width=960" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="styles.css" />
 <style>
   .where-title {
@@ -129,6 +129,27 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  @media (max-width: 700px) {
+    .float-stage { height: 620px; }
+
+    .floater {
+      white-space: normal !important;
+      overflow-wrap: break-word;
+      max-width: calc(94vw - var(--x-pct, 0) * 1vw) !important;
+      font-size: 17px;
+    }
+
+    .floater .inner {
+      display: block;
+      width: 100%;
+    }
+
+    .floater-small { font-size: 13px; }
+    .floater-upcoming { font-size: 15px; }
+
+    .hood-bubble { display: none; }
+  }
 </style>
 </head>
 <body data-page="where">
@@ -147,9 +168,11 @@
       { text: 'My tierlist of academic personal websites',                  href: 'links/tierlist.html',                                      x:  4, y: 22 },
       { text: 'sinceyouarrived.world/taken',                               href: 'https://sinceyouarrived.world/taken',                      x: 55, y: 33, small: true },
       { text: 'european-alternatives.eu',                                  href: 'https://european-alternatives.eu/',                         x: 10, y: 43, small: true },
-      { text: 'Prague Yay!',                                               href: 'https://asodomova.github.io/pragueyay/#prague-food',       x: 60, y: 43, small: true, tooltip: "My second website that I originally developed for a trip with my friends to Czechia. It's a collection of handpicked places where I like to spend time when I am in Prague or Brno." },
-      { text: 'my audiobook management app [for Mac]',                                                                                        x: 46, y: 63, upcoming: true, tooltip: 'TBD' },
+      { text: 'Prague Yay!',                                               href: 'https://asodomova.github.io/pragueyay/#prague-food',       x: 60, y: 43, my: 50, small: true, tooltip: "My second website that I originally developed for a trip with my friends to Czechia. It's a collection of handpicked places where I like to spend time when I am in Prague or Brno." },
+      { text: 'my audiobook management app [for Mac]',                                                                                        x: 46, y: 63, my: 70, upcoming: true, tooltip: 'TBD' },
     ];
+
+    const isMobile = window.matchMedia('(max-width: 700px)').matches;
 
     const stage = document.getElementById('stage');
     const styleSheet = document.createElement('style');
@@ -162,7 +185,8 @@
       if (item.small) { a.target = '_blank'; a.rel = 'noopener'; }
       if (item.wrap) { a.style.whiteSpace = 'normal'; a.style.maxWidth = '420px'; }
       a.style.left = item.x + '%';
-      a.style.top = item.y + '%';
+      a.style.top = (isMobile && item.my != null ? item.my : item.y) + '%';
+      a.style.setProperty('--x-pct', item.x);
 
       // unique drift per item
       const dx = 6 + Math.random() * 10;   // px

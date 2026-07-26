@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>Adéla Sodomová</title>
-<meta name="viewport" content="width=960" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../styles.css" />
 <base href="../" />
 <style>
@@ -90,6 +90,10 @@
     pointer-events: none;
   }
 
+  @media (max-width: 700px) {
+    .win { max-width: 90vw; }
+  }
+
 </style>
 </head>
 <body data-page="work-essay">
@@ -174,28 +178,36 @@
       var dragging = false;
       var startMouseX, startMouseY, startLeft, startTop;
 
-      bar.addEventListener('mousedown', function (e) {
-        if (e.button !== 0) return;
-        e.preventDefault();
-
+      function startDrag(clientX, clientY) {
         dragging = true;
         win.classList.add('dragging');
         win.style.zIndex = ++zTop;
 
-        startMouseX = e.clientX;
-        startMouseY = e.clientY;
+        startMouseX = clientX;
+        startMouseY = clientY;
         startLeft   = win.offsetLeft;
         startTop    = win.offsetTop;
+      }
 
-        function onMove(e) {
-          if (!dragging) return;
-          win.style.left = (startLeft + e.clientX - startMouseX) + 'px';
-          win.style.top  = (startTop  + e.clientY - startMouseY) + 'px';
-        }
+      function moveDrag(clientX, clientY) {
+        if (!dragging) return;
+        win.style.left = (startLeft + clientX - startMouseX) + 'px';
+        win.style.top  = (startTop  + clientY - startMouseY) + 'px';
+      }
 
+      function endDrag() {
+        dragging = false;
+        win.classList.remove('dragging');
+      }
+
+      bar.addEventListener('mousedown', function (e) {
+        if (e.button !== 0) return;
+        e.preventDefault();
+        startDrag(e.clientX, e.clientY);
+
+        function onMove(e) { moveDrag(e.clientX, e.clientY); }
         function onUp() {
-          dragging = false;
-          win.classList.remove('dragging');
+          endDrag();
           document.removeEventListener('mousemove', onMove);
           document.removeEventListener('mouseup', onUp);
         }
@@ -204,10 +216,32 @@
         document.addEventListener('mouseup', onUp);
       });
 
-      // Clicking anywhere on the window brings it forward
+      bar.addEventListener('touchstart', function (e) {
+        var t = e.touches[0];
+        startDrag(t.clientX, t.clientY);
+
+        function onMove(e) {
+          e.preventDefault();
+          var t = e.touches[0];
+          moveDrag(t.clientX, t.clientY);
+        }
+        function onEnd() {
+          endDrag();
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend', onEnd);
+        }
+
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onEnd);
+      }, { passive: true });
+
+      // Clicking/tapping anywhere on the window brings it forward
       win.addEventListener('mousedown', function () {
         win.style.zIndex = ++zTop;
       });
+      win.addEventListener('touchstart', function () {
+        win.style.zIndex = ++zTop;
+      }, { passive: true });
     });
 
     // ── Set initial positions once gallery width is known ────────────────

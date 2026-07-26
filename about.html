@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>About · Adéla Sodomová</title>
-<meta name="viewport" content="width=960" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="styles.css" />
 <style>
 
@@ -109,6 +109,20 @@
   }
   .pdf-fallback a { color: var(--blue); border-bottom: 1px solid currentColor; }
 
+  @media (max-width: 700px) {
+    #choices { margin-left: 0; }
+
+    .prose-layout { flex-direction: column; }
+
+    .ascii-portrait {
+      width: 100%;
+      max-width: 280px;
+      margin-top: 24px;
+      align-self: center;
+    }
+
+    .prose-text { text-align: left; }
+  }
 </style>
 </head>
 <body data-page="about" data-footer="right">

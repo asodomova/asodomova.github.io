@@ -32,8 +32,14 @@
         <a class="label" href="where.html">&lt;WHERE TO NEXT?&gt;</a>
       </div>`;
 
+  const toggleBtn = `
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>`;
+
   if (page === 'home') {
     topbar.innerHTML = `
+      ${toggleBtn}
       <nav class="menu menu--home" aria-label="Primary">
         ${menuItems}
       </nav>`;
@@ -43,53 +49,65 @@
         <span class="brand-first">Adéla</span>
         <span class="brand-last">Sodomová</span>
       </a>
+      ${toggleBtn}
       <nav class="menu menu--inner" aria-label="Primary">
         ${menuItems}
       </nav>`;
   }
   document.body.prepend(topbar);
 
+  // ---- Mobile hamburger toggle ----
+  const toggle = topbar.querySelector('.menu-toggle');
+  const nav = topbar.querySelector('.menu');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    toggle.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+
   const footer = document.createElement('div');
   footer.className = `footer ${footerMode}`;
   footer.textContent = 'Thank you for paying me a visit!';
   document.body.appendChild(footer);
 
-  // ---- Animated fairy cursor ----
-  const FRAMES = 5;
-  const BASE   = 'cursors/fairy_';
-  const FPS    = 12; // frames per second
+  // ---- Animated fairy cursor (desktop only — meaningless on touch) ----
+  if (window.matchMedia('(min-width: 701px)').matches) {
+    const FRAMES = 5;
+    const BASE   = 'cursors/fairy_';
+    const FPS    = 12; // frames per second
 
-  // Preload all frames
-  const imgs = Array.from({ length: FRAMES }, (_, i) => {
-    const img = new Image();
-    img.src = BASE + i + '.png';
-    return img;
-  });
+    // Preload all frames
+    const imgs = Array.from({ length: FRAMES }, (_, i) => {
+      const img = new Image();
+      img.src = BASE + i + '.png';
+      return img;
+    });
 
-  const el = document.createElement('img');
-  el.style.cssText = [
-    'position:fixed',
-    'pointer-events:none',
-    'z-index:99999',
-    'width:42px',
-    'height:42px',
-    'transform:translate(-4px,-4px)', // hotspot offset
-    'image-rendering:pixelated',
-  ].join(';');
-  el.src = imgs[0].src;
-  document.body.appendChild(el);
+    const el = document.createElement('img');
+    el.style.cssText = [
+      'position:fixed',
+      'pointer-events:none',
+      'z-index:99999',
+      'width:42px',
+      'height:42px',
+      'transform:translate(-4px,-4px)', // hotspot offset
+      'image-rendering:pixelated',
+    ].join(';');
+    el.src = imgs[0].src;
+    document.body.appendChild(el);
 
-  let frame = 0;
-  let x = -100, y = -100;
+    let frame = 0;
+    let x = -100, y = -100;
 
-  document.addEventListener('mousemove', e => {
-    x = e.clientX; y = e.clientY;
-    el.style.left = x + 'px';
-    el.style.top  = y + 'px';
-  });
+    document.addEventListener('mousemove', e => {
+      x = e.clientX; y = e.clientY;
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+    });
 
-  setInterval(() => {
-    frame = (frame + 1) % FRAMES;
-    el.src = imgs[frame].src;
-  }, 1000 / FPS);
+    setInterval(() => {
+      frame = (frame + 1) % FRAMES;
+      el.src = imgs[frame].src;
+    }, 1000 / FPS);
+  }
 })();

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>Podnikavá mysl · Adéla Sodomová</title>
-<meta name="viewport" content="width=960" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="../styles.css" />
 <base href="../" />
 <style>
@@ -192,6 +192,21 @@
     100% { stroke-dashoffset: 1; opacity: 0; }
   }
 
+  @media (max-width: 700px) {
+    .pm-layout { flex-direction: column; }
+    .pm-statics { flex: 0 0 auto; width: 100%; }
+    .scroll-frames-wrap { flex-direction: column; }
+
+    /* No hover on touch — make panes scrollable unconditionally */
+    .scroll-win-body {
+      height: 420px;
+      overflow-y: auto;
+    }
+    .scroll-win-body::after { opacity: 0; }
+
+    .scroll-hint { flex-direction: row; width: auto; padding-top: 0; margin-top: 6px; }
+    .scroll-hint-label { writing-mode: horizontal-tb; }
+  }
 </style>
 </head>
 <body data-page="work-essay">
