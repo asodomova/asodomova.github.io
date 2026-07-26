@@ -10,19 +10,19 @@
   .where-title {
     margin-top: 110px;
     font-family: 'Crimson Text', serif;
-    font-size: 52px;
+    font-size: 61px;
     line-height: 1;
     letter-spacing: -0.01em;
   }
   .where-title .em {
     font-family: 'PP NeueBit', monospace;
     font-weight: 700;
-    font-size: 64px;
+    font-size: 75px;
   }
 
   .float-stage {
     position: relative;
-    margin-top: 30px;
+    margin-top: 70px;
     height: 960px;
     width: 100%;
   }
@@ -131,7 +131,10 @@
   }
 
   @media (max-width: 700px) {
-    .float-stage { height: 620px; }
+    .where-title { font-size: 52px; }
+    .where-title .em { font-size: 64px; }
+
+    .float-stage { height: 620px; margin-top: 30px; }
 
     .floater {
       white-space: normal !important;

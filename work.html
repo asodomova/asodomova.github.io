@@ -8,7 +8,6 @@
 <style>
   .work-title {
     margin-top: 70px;
-    margin-bottom: 0;
     font-family: 'Crimson Text', serif;
     font-size: 61px;
     line-height: 1;
@@ -22,10 +21,6 @@
 
   .section {
     margin-top: 10px;
-  }
-
-  .section:first-of-type {
-    margin-top: 40px;
   }
 
   .section h2 {
@@ -93,6 +88,10 @@
   .row em { font-style: italic; }
 
   @media (max-width: 700px) {
+    .work-title { margin-bottom: 0; }
+
+    .section:first-of-type { margin-top: 40px; }
+
     .row {
       grid-template-columns: 1fr;
       row-gap: 4px;
