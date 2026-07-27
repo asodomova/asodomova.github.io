@@ -276,6 +276,16 @@ a {
     justify-content: space-between;
   }
 
+  /* Home page has no brand-name in the topbar — push the toggle to the right */
+  body[data-page="home"] .topbar {
+    justify-content: flex-end;
+  }
+
+  /* Hide the footer sign-off on the mobile homepage only */
+  body[data-page="home"] .footer {
+    display: none;
+  }
+
   .brand { font-size: 40px; }
   .brand-name { order: 1; }
   .brand-name .brand-first { font-size: 22px; }
