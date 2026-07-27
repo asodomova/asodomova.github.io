@@ -47,7 +47,7 @@
     topbar.innerHTML = `
       <a href="index.html" class="brand-name" aria-label="Home">
         <span class="brand-first">Adéla</span>
-        <span class="brand-last">Sodomová</span>
+        <span class="brand-last">Sodoma</span>
       </a>
       ${toggleBtn}
       <nav class="menu menu--inner" aria-label="Primary">
