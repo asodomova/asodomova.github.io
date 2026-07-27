@@ -59,6 +59,21 @@
   // ---- Mobile hamburger toggle ----
   const toggle = topbar.querySelector('.menu-toggle');
   const nav = topbar.querySelector('.menu');
+
+  // Home page: the name sits below the topbar, not inside it — position
+  // the opened menu just under the name instead of letting it default
+  // to opening above it.
+  if (page === 'home') {
+    const homeName = document.querySelector('.home-name');
+    const updateMenuTop = () => {
+      if (!homeName) return;
+      const rect = homeName.getBoundingClientRect();
+      document.documentElement.style.setProperty('--home-menu-top', (rect.bottom + 16) + 'px');
+    };
+    updateMenuTop();
+    window.addEventListener('resize', updateMenuTop);
+  }
+
   toggle.addEventListener('click', () => {
     const open = nav.classList.toggle('is-open');
     toggle.classList.toggle('is-open', open);

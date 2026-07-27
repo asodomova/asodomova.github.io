@@ -305,6 +305,19 @@ a {
     order: 3;
   }
 
+  /* Home page: name isn't in the topbar, so open the menu as an
+     overlay anchored just below the name instead of above it. */
+  body[data-page="home"] .menu.is-open {
+    position: fixed;
+    top: var(--home-menu-top, 140px);
+    left: 20px;
+    right: 20px;
+    width: auto;
+    background: var(--bg);
+    z-index: 40;
+    margin-top: 0;
+  }
+
   .menu.is-open { display: flex; }
 
   .menu-item .submenu {
